@@ -1,5 +1,6 @@
 import { createClient } from "@/lib/supabase/server";
 import { notFound } from "next/navigation";
+export const dynamic = 'force-dynamic';
 import { RatingForm } from "@/components/rating-form";
 
 export default async function RateStaffPage(props: {
@@ -14,7 +15,7 @@ export default async function RateStaffPage(props: {
     .select("id, name, department, position, organization_id")
     .eq("id", staffId)
     .eq("is_active", true)
-    .single();
+    .maybeSingle();
 
   if (!staff) notFound();
 
