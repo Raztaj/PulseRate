@@ -1,5 +1,4 @@
 import { createClient } from "@/lib/supabase/server";
-import Image from "next/image";
 import { notFound } from "next/navigation";
 import { RatingForm } from "@/components/rating-form";
 
@@ -39,7 +38,9 @@ export default async function RateStaffPage(props: {
     <div className="flex min-h-screen items-center justify-center px-4 py-12">
       <div className="w-full max-w-lg space-y-6">
         <div className="text-center space-y-2">
-          <Image src="/logo.svg" alt="خاتون" width={48} height={48} className="mx-auto rounded-lg" />
+          <div className="mx-auto w-12 h-12 rounded-lg bg-white shadow-sm flex items-center justify-center p-1.5">
+            <img src="/logo.svg" alt="خاتون" className="w-full h-full" />
+          </div>
           <h1 className="text-2xl font-bold">{staff.name}</h1>
           <p className="text-muted-foreground">
             {staff.position}
