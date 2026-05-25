@@ -1,5 +1,6 @@
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
+export const dynamic = 'force-dynamic';
 import { StaffForm } from "@/components/staff-form";
 
 export default async function NewStaffPage() {

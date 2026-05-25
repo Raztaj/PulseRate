@@ -32,7 +32,9 @@ export function Sidebar() {
   return (
     <aside className="flex h-full w-60 flex-col border-l bg-card">
       <div className="flex items-center gap-2 border-b px-6 py-4">
-        <img src="/logo.svg" alt="خاتون" width={36} height={36} className="rounded-lg" />
+        <div className="w-9 h-9 rounded-lg bg-white flex items-center justify-center p-0.5">
+          <img src="/logo.svg" alt="خاتون" className="w-full h-full object-contain" />
+        </div>
         <span className="text-xl font-bold">خاتون</span>
       </div>
       <nav className="flex-1 space-y-1 px-3 py-4">
