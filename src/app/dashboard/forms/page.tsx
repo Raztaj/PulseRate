@@ -12,16 +12,10 @@ import type { Question, Form } from "@/types";
 
 export default async function FormsPage() {
   const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-
-  if (!user) redirect("/login");
-
   const { data: admin } = await supabase
     .from("admins")
     .select("organization_id")
-    .eq("user_id", user.id)
+    .limit(1)
     .single();
 
   if (!admin) redirect("/login");

@@ -15,11 +15,6 @@ export default async function StaffDetailPage(props: {
   const { id } = await props.params;
 
   const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-
-  if (!user) redirect("/login");
 
   const { data: staff } = await supabase
     .from("staff")

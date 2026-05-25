@@ -2,40 +2,29 @@
 
 import { useActionState } from "react";
 import { useRouter } from "next/navigation";
-import { createClient } from "@/lib/supabase/client";
+import { loginUser } from "@/actions/auth";
+import { setAuth } from "@/lib/auth";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Loader2 } from "lucide-react";
 
-async function loginAction(
-  _prev: { error?: string } | null,
-  formData: FormData
-) {
-  const email = formData.get("email") as string;
-  const password = formData.get("password") as string;
-
-  if (!email || !password) {
-    return { error: "البريد الإلكتروني وكلمة المرور مطلوبان." };
-  }
-
-  const supabase = createClient();
-  const { error } = await supabase.auth.signInWithPassword({ email, password });
-
-  if (error) {
-    return { error: error.message };
-  }
-
-  return {};
-}
-
 export function LoginForm() {
   const router = useRouter();
-  const [state, formAction, pending] = useActionState(loginAction, null);
 
-  if (state && !state.error) {
-    router.push("/dashboard");
+  async function wrappedLogin(
+    _prev: { error?: string } | null,
+    formData: FormData
+  ) {
+    const result = await loginUser(formData);
+    if (result.success) {
+      setAuth(result.adminId!, result.orgId!);
+      router.push("/dashboard");
+    }
+    return result;
   }
+
+  const [state, formAction, pending] = useActionState(wrappedLogin, null);
 
   return (
     <form action={formAction} className="space-y-4">

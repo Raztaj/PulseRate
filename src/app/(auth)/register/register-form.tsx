@@ -3,7 +3,7 @@
 import { useActionState } from "react";
 import { useRouter } from "next/navigation";
 import { registerUser } from "@/actions/auth";
-import { createClient } from "@/lib/supabase/client";
+import { setAuth } from "@/lib/auth";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -16,19 +16,13 @@ export function RegisterForm() {
     async (_prev: { error?: string; success?: boolean } | null, formData: FormData) => {
       const result = await registerUser(formData);
       if (result.success) {
-        const email = formData.get("email") as string;
-        const password = formData.get("password") as string;
-        const supabase = createClient();
-        await supabase.auth.signInWithPassword({ email, password });
+        setAuth(result.adminId!, result.orgId!);
+        router.push("/dashboard");
       }
       return result;
     },
     null
   );
-
-  if (state?.success) {
-    router.push("/dashboard");
-  }
 
   return (
     <form action={formAction} className="space-y-4">

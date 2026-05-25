@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { createClient } from "@/lib/supabase/client";
+import { clearAuth } from "@/lib/auth";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import {
@@ -24,9 +24,8 @@ export function Sidebar() {
   const pathname = usePathname();
   const router = useRouter();
 
-  async function handleSignOut() {
-    const supabase = createClient();
-    await supabase.auth.signOut();
+  function handleSignOut() {
+    clearAuth();
     router.push("/login");
   }
 

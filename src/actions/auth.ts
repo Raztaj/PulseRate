@@ -2,6 +2,39 @@
 
 import { createAdminClient } from "@/lib/supabase/admin";
 
+export async function loginUser(formData: FormData) {
+  const email = formData.get("email") as string;
+  const password = formData.get("password") as string;
+
+  if (!email || !password) {
+    return { error: "البريد الإلكتروني وكلمة المرور مطلوبان." };
+  }
+
+  const adminPassword = process.env.ADMIN_PASSWORD;
+
+  if (!adminPassword) {
+    return { error: "خطأ في إعدادات النظام." };
+  }
+
+  if (password !== adminPassword) {
+    return { error: "البريد الإلكتروني أو كلمة المرور غير صحيحة." };
+  }
+
+  const supabase = createAdminClient();
+
+  const { data: admin, error } = await supabase
+    .from("admins")
+    .select("id, organization_id")
+    .eq("email", email)
+    .single();
+
+  if (error || !admin) {
+    return { error: "لم يتم العثور على حساب بهذا البريد الإلكتروني." };
+  }
+
+  return { success: true, adminId: admin.id, orgId: admin.organization_id };
+}
+
 export async function registerUser(formData: FormData) {
   const email = formData.get("email") as string;
   const password = formData.get("password") as string;
@@ -16,22 +49,26 @@ export async function registerUser(formData: FormData) {
     return { error: "كلمة المرور يجب أن تكون 6 أحرف على الأقل." };
   }
 
-  const supabase = createAdminClient();
+  const adminPassword = process.env.ADMIN_PASSWORD;
 
-  const { data: authData, error: authError } = await supabase.auth.admin.createUser(
-    {
-      email,
-      password,
-      email_confirm: true,
-    }
-  );
-
-  if (authError) {
-    return { error: authError.message };
+  if (!adminPassword) {
+    return { error: "خطأ في إعدادات النظام." };
   }
 
-  if (!authData.user) {
-    return { error: "فشل إنشاء المستخدم." };
+  if (password !== adminPassword) {
+    return { error: "كلمة المرور غير صحيحة." };
+  }
+
+  const supabase = createAdminClient();
+
+  const { data: existing } = await supabase
+    .from("admins")
+    .select("id")
+    .eq("email", email)
+    .maybeSingle();
+
+  if (existing) {
+    return { error: "البريد الإلكتروني مستخدم بالفعل." };
   }
 
   const { data: org, error: orgError } = await supabase
@@ -44,11 +81,16 @@ export async function registerUser(formData: FormData) {
     return { error: "فشل إنشاء المنشأة." };
   }
 
-  const { error: adminError } = await supabase.from("admins").insert({
-    user_id: authData.user.id,
-    organization_id: org.id,
-    role: "admin",
-  });
+  const { data: admin, error: adminError } = await supabase
+    .from("admins")
+    .insert({
+      email,
+      user_id: null,
+      organization_id: org.id,
+      role: "admin",
+    })
+    .select("id, organization_id")
+    .single();
 
   if (adminError) {
     return { error: "فشل إعداد حساب المسؤول." };
@@ -96,5 +138,5 @@ export async function registerUser(formData: FormData) {
     ]);
   }
 
-  return { success: true };
+  return { success: true, adminId: admin.id, orgId: admin.organization_id };
 }
