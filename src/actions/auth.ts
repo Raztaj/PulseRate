@@ -25,11 +25,11 @@ export async function loginUser(formData: FormData) {
   const { data: admin } = await supabase
     .from("admins")
     .select("id, organization_id")
-    .eq("email", email)
+    .limit(1)
     .maybeSingle();
 
   if (!admin) {
-    return { error: "لم يتم العثور على حساب بهذا البريد الإلكتروني." };
+    return { error: "لم يتم العثور على حساب المسؤول." };
   }
 
   return { success: true, adminId: admin.id, orgId: admin.organization_id };
