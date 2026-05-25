@@ -16,7 +16,7 @@ export default async function FormsPage() {
     .from("admins")
     .select("organization_id")
     .limit(1)
-    .single();
+    .maybeSingle();
 
   if (!admin) redirect("/login");
 

@@ -1,9 +1,9 @@
 "use server";
 
-import { createAdminClient } from "@/lib/supabase/admin";
+import { createClient } from "@/lib/supabase/server";
 
 export async function getDashboardStats(orgId: string) {
-  const supabase = createAdminClient();
+  const supabase = await createClient();
 
   const { data: orgStaff } = await supabase
     .from("staff")
@@ -61,7 +61,7 @@ export async function getDashboardStats(orgId: string) {
 }
 
 export async function getStaffList(orgId: string) {
-  const supabase = createAdminClient();
+  const supabase = await createClient();
 
   const { data: staff } = await supabase
     .from("staff")
@@ -102,7 +102,7 @@ export async function getStaffList(orgId: string) {
 }
 
 export async function getStaffLeaderboard(orgId: string, limit = 5) {
-  const supabase = createAdminClient();
+  const supabase = await createClient();
 
   const { data: staff } = await supabase
     .from("staff")
@@ -148,7 +148,7 @@ export async function getStaffLeaderboard(orgId: string, limit = 5) {
 }
 
 export async function getRatingChartData(orgId: string) {
-  const supabase = createAdminClient();
+  const supabase = await createClient();
 
   const { data: orgStaff } = await supabase
     .from("staff")
@@ -214,7 +214,7 @@ export async function getRatingChartData(orgId: string) {
 }
 
 export async function getRecentFeedback(orgId: string, limit = 10) {
-  const supabase = createAdminClient();
+  const supabase = await createClient();
 
   const { data: orgStaff } = await supabase
     .from("staff")
@@ -275,7 +275,7 @@ export async function getRecentFeedback(orgId: string, limit = 10) {
 }
 
 export async function getForms(orgId: string) {
-  const supabase = createAdminClient();
+  const supabase = await createClient();
 
   const { data: formsRaw } = await supabase
     .from("forms")
@@ -298,7 +298,7 @@ export async function getForms(orgId: string) {
 }
 
 export async function getStaffDetail(staffId: string) {
-  const supabase = createAdminClient();
+  const supabase = await createClient();
 
   const { data: staff } = await supabase
     .from("staff")
@@ -351,7 +351,7 @@ export async function getStaffDetail(staffId: string) {
 }
 
 export async function getAdminByEmail(email: string) {
-  const supabase = createAdminClient();
+  const supabase = await createClient();
 
   const { data: admin } = await supabase
     .from("admins")

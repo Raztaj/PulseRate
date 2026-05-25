@@ -1,6 +1,6 @@
 "use server";
 
-import { createAdminClient } from "@/lib/supabase/admin";
+import { createClient } from "@/lib/supabase/server";
 
 export async function loginUser(formData: FormData) {
   const email = formData.get("email") as string;
@@ -20,15 +20,15 @@ export async function loginUser(formData: FormData) {
     return { error: "البريد الإلكتروني أو كلمة المرور غير صحيحة." };
   }
 
-  const supabase = createAdminClient();
+  const supabase = await createClient();
 
-  const { data: admin, error } = await supabase
+  const { data: admin } = await supabase
     .from("admins")
     .select("id, organization_id")
     .eq("email", email)
-    .single();
+    .maybeSingle();
 
-  if (error || !admin) {
+  if (!admin) {
     return { error: "لم يتم العثور على حساب بهذا البريد الإلكتروني." };
   }
 
@@ -59,7 +59,7 @@ export async function registerUser(formData: FormData) {
     return { error: "كلمة المرور غير صحيحة." };
   }
 
-  const supabase = createAdminClient();
+  const supabase = await createClient();
 
   const { data: existing } = await supabase
     .from("admins")

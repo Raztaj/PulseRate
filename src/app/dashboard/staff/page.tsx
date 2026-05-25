@@ -11,7 +11,7 @@ export default async function StaffPage() {
     .from("admins")
     .select("organization_id")
     .limit(1)
-    .single();
+    .maybeSingle();
 
   if (!admin) redirect("/login");
 

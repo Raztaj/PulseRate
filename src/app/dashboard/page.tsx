@@ -17,7 +17,7 @@ export default async function DashboardPage() {
     .from("admins")
     .select("organization_id")
     .limit(1)
-    .single();
+    .maybeSingle();
 
   if (!admin) redirect("/login");
 
