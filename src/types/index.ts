@@ -21,6 +21,7 @@ export interface Staff {
   position: string
   photo_url: string
   is_active: boolean
+  form_id: string | null
   created_at: string
 }
 

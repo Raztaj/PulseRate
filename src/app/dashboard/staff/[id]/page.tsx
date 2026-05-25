@@ -1,5 +1,4 @@
 import { createClient } from "@/lib/supabase/server";
-import { redirect } from "next/navigation";
 export const dynamic = 'force-dynamic';
 import { notFound } from "next/navigation";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
@@ -7,8 +6,10 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { QRDisplay } from "@/components/qr-display";
 import { DeleteStaffButton } from "@/components/delete-staff-button";
+import { StaffFormEditor } from "@/components/staff-form-editor";
 import { getInitials } from "@/lib/utils";
-import { Star, MessageSquare } from "lucide-react";
+import type { Question } from "@/types";
+import { Star, MessageSquare, ClipboardList } from "lucide-react";
 
 export default async function StaffDetailPage(props: {
   params: Promise<{ id: string }>;
@@ -53,6 +54,19 @@ export default async function StaffDetailPage(props: {
     .filter((t): t is string => t !== null && t.length > 0);
 
   const initials = getInitials(staff.name ?? "");
+
+  let formQuestions: Question[] = [];
+  let formId: string | null = null;
+
+  if (staff.form_id) {
+    const { data: questions } = await supabase
+      .from("questions")
+      .select("*")
+      .eq("form_id", staff.form_id)
+      .order("order_index");
+    formQuestions = (questions ?? []) as Question[];
+    formId = staff.form_id;
+  }
 
   const baseUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
 
@@ -157,6 +171,20 @@ export default async function StaffDetailPage(props: {
                 </div>
               ))}
             </div>
+          </CardContent>
+        </Card>
+      )}
+
+      {formId && (
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-lg flex items-center gap-2">
+              <ClipboardList className="h-4 w-4" />
+              نموذج التقييم
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <StaffFormEditor formId={formId} initialQuestions={formQuestions} />
           </CardContent>
         </Card>
       )}

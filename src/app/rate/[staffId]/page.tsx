@@ -2,6 +2,7 @@ import { createClient } from "@/lib/supabase/server";
 import { notFound } from "next/navigation";
 export const dynamic = 'force-dynamic';
 import { RatingForm } from "@/components/rating-form";
+import type { Question } from "@/types";
 
 export default async function RateStaffPage(props: {
   params: Promise<{ staffId: string }>;
@@ -12,28 +13,34 @@ export default async function RateStaffPage(props: {
 
   const { data: staff } = await supabase
     .from("staff")
-    .select("id, name, department, position, organization_id")
+    .select("id, name, department, position, form_id")
     .eq("id", staffId)
     .eq("is_active", true)
     .maybeSingle();
 
   if (!staff) notFound();
 
-  const { data: forms } = await supabase
-    .from("forms")
-    .select("id, title, description")
-    .eq("organization_id", staff.organization_id)
-    .eq("is_active", true);
+  let questions: Question[] = [];
+  let formData: { id: string; title: string; description: string } | null = null;
 
-  const activeForm = forms?.[0] ?? null;
+  if (staff.form_id) {
+    const { data: form } = await supabase
+      .from("forms")
+      .select("id, title, description")
+      .eq("id", staff.form_id)
+      .eq("is_active", true)
+      .maybeSingle();
 
-  const questions = activeForm
-    ? await supabase
+    if (form) {
+      formData = form;
+      const { data: qs } = await supabase
         .from("questions")
         .select("*")
-        .eq("form_id", activeForm.id)
-        .order("order_index")
-    : null;
+        .eq("form_id", form.id)
+        .order("order_index");
+      questions = (qs ?? []) as Question[];
+    }
+  }
 
   return (
     <div className="flex min-h-screen items-center justify-center px-4 py-12">
@@ -49,13 +56,13 @@ export default async function RateStaffPage(props: {
           </p>
         </div>
 
-        {activeForm && questions ? (
+        {formData ? (
           <RatingForm
             staffId={staff.id}
-            formId={activeForm.id}
-            formTitle={activeForm.title}
-            formDescription={activeForm.description}
-            questions={questions.data ?? []}
+            formId={formData.id}
+            formTitle={formData.title}
+            formDescription={formData.description}
+            questions={questions}
           />
         ) : (
           <div className="text-center py-12">

@@ -22,30 +22,82 @@ async function addStaffAction(
   }
 
   const supabase = createClient();
-  const { error } = await supabase.from("staff").insert({
-    name,
-    department: department || null,
-    position: position || null,
-    organization_id: orgId,
-  });
 
-  if (error) {
-    return { error: error.message };
+  const { data: staff, error: staffError } = await supabase
+    .from("staff")
+    .insert({
+      name,
+      department: department || null,
+      position: position || null,
+      organization_id: orgId,
+    })
+    .select("id")
+    .single();
+
+  if (staffError || !staff) {
+    return { error: "فشل إضافة الموظف." };
   }
 
-  return {};
+  const { data: form, error: formError } = await supabase
+    .from("forms")
+    .insert({
+      organization_id: orgId,
+      title: `نموذج ${name}`,
+      description: "نموذج تقييم مخصص",
+    })
+    .select("id")
+    .single();
+
+  if (formError || !form) {
+    return { error: "فشل إنشاء النموذج." };
+  }
+
+  const { error: qError } = await supabase.from("questions").insert([
+    {
+      form_id: form.id,
+      question_text: "كيف كانت جودة الخدمة؟",
+      question_type: "star_rating",
+      is_required: true,
+      order_index: 0,
+    },
+    {
+      form_id: form.id,
+      question_text: "كيف كانت الاحترافية؟",
+      question_type: "star_rating",
+      is_required: true,
+      order_index: 1,
+    },
+    {
+      form_id: form.id,
+      question_text: "تعليقات إضافية",
+      question_type: "text",
+      is_required: false,
+      order_index: 2,
+    },
+  ]);
+
+  if (qError) {
+    return { error: "فشل إضافة الأسئلة." };
+  }
+
+  const { error: linkError } = await supabase
+    .from("staff")
+    .update({ form_id: form.id })
+    .eq("id", staff.id);
+
+  if (linkError) {
+    return { error: "فشل ربط النموذج." };
+  }
+
+  return { success: true, staffId: staff.id };
 }
 
-export function StaffForm({ orgId, editId }: { orgId: string; editId?: string }) {
+export function StaffForm({ orgId }: { orgId: string }) {
   const router = useRouter();
   const [state, formAction, pending] = useActionState(addStaffAction, null);
 
-  if (state && !state.error) {
-    if (editId) {
-      router.push(`/dashboard/staff/${editId}`);
-    } else {
-      router.push("/dashboard/staff");
-    }
+  if (state && !state.error && state.staffId) {
+    router.push(`/dashboard/staff/${state.staffId}`);
   }
 
   return (
