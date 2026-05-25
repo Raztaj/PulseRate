@@ -70,9 +70,11 @@ async function saveFormAction(
 export function StaffFormEditor({
   formId,
   initialQuestions,
+  onSaved,
 }: {
   formId: string;
   initialQuestions: Question[];
+  onSaved?: () => void;
 }) {
   const router = useRouter();
   const [state, formAction, pending] = useActionState(saveFormAction, null);
@@ -115,8 +117,9 @@ export function StaffFormEditor({
   useEffect(() => {
     if (state?.success) {
       router.refresh();
+      onSaved?.();
     }
-  }, [state, router]);
+  }, [state, router, onSaved]);
 
   return (
     <form action={formAction} onSubmit={handleFormSubmit} className="space-y-4">
