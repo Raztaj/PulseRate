@@ -25,7 +25,7 @@ export function StaffCard({ staff }: { staff: StaffWithStats }) {
         <CardContent>
           <div className="flex items-center justify-between text-sm">
             <span className="text-muted-foreground">
-              {staff.total_submissions} reviews
+              {staff.total_submissions} تقييم
             </span>
             {staff.total_submissions > 0 ? (
               <Badge
@@ -37,10 +37,10 @@ export function StaffCard({ staff }: { staff: StaffWithStats }) {
                     : "destructive"
                 }
               >
-                {staff.avg_rating.toFixed(1)} avg
+                {staff.avg_rating.toFixed(1)} متوسط
               </Badge>
             ) : (
-              <Badge variant="outline">No ratings</Badge>
+              <Badge variant="outline">لا توجد تقييمات</Badge>
             )}
           </div>
         </CardContent>

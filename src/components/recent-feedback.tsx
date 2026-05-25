@@ -22,7 +22,7 @@ export async function RecentFeedback({
   if (staffIds.length === 0) {
     return (
       <p className="text-sm text-muted-foreground py-8 text-center">
-        No feedback yet.
+        لا توجد تقييمات بعد.
       </p>
     );
   }
@@ -44,7 +44,7 @@ export async function RecentFeedback({
   if (!submissions || submissions.length === 0) {
     return (
       <p className="text-sm text-muted-foreground py-8 text-center">
-        No feedback yet.
+        لا توجد تقييمات بعد.
       </p>
     );
   }
@@ -81,7 +81,7 @@ export async function RecentFeedback({
             : null;
 
         const staffName =
-          (sub.staff as unknown as { name: string } | null)?.name ?? "Unknown";
+          (sub.staff as unknown as { name: string } | null)?.name ?? "غير معروف";
 
         return (
           <div key={sub.id} className="flex items-start gap-3 rounded-lg border p-3">
@@ -117,7 +117,7 @@ export async function RecentFeedback({
                 </p>
               ))}
               <p className="text-xs text-muted-foreground mt-1">
-                {new Date(sub.submitted_at).toLocaleDateString("en-US", {
+                {new Date(sub.submitted_at).toLocaleDateString("ar-SA", {
                   month: "short",
                   day: "numeric",
                   hour: "2-digit",

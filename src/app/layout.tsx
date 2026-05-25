@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Noto_Kufi_Arabic, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "@/components/ui/sonner";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
+const notoKufiArabic = Noto_Kufi_Arabic({
+  variable: "--font-arabic",
+  subsets: ["arabic"],
+  weight: ["400", "500", "600", "700"],
 });
 
 const geistMono = Geist_Mono({
@@ -14,9 +15,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "PulseRate — Staff Feedback & Rating System",
-  description:
-    "Generate QR codes for staff, collect customer feedback, and track performance analytics.",
+  title: "خاتون — تقييم الموظفين و جمع الملاحظات",
+  description: "إنشاء رموز QR للموظفين، جمع تقييمات العملاء، و تحليل الأداء",
 };
 
 export default function RootLayout({
@@ -26,13 +26,11 @@ export default function RootLayout({
 }>) {
   return (
     <html
-      lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      lang="ar"
+      dir="rtl"
+      className={`${notoKufiArabic.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">
-        {children}
-        <Toaster />
-      </body>
+      <body className="min-h-full flex flex-col">{children}</body>
     </html>
   );
 }

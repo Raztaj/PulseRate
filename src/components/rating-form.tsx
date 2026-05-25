@@ -1,7 +1,6 @@
 "use client";
 
 import { useActionState } from "react";
-import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Loader2, CheckCircle } from "lucide-react";
@@ -30,8 +29,8 @@ async function submitFeedbackAction(
     .select()
     .single();
 
-  if (subError) return { error: "Failed to submit feedback." };
-  if (!submission) return { error: "Something went wrong." };
+  if (subError) return { error: "فشل إرسال التقييم." };
+  if (!submission) return { error: "حدث خطأ ما." };
 
   const answers: {
     submission_id: string;
@@ -65,7 +64,7 @@ async function submitFeedbackAction(
 
   if (answers.length > 0) {
     const { error: ansError } = await supabase.from("answers").insert(answers);
-    if (ansError) return { error: "Failed to save answers." };
+    if (ansError) return { error: "فشل حفظ الإجابات." };
   }
 
   return { success: true };
@@ -78,7 +77,6 @@ export function RatingForm({
   formDescription,
   questions,
 }: RatingFormProps) {
-  const router = useRouter();
   const [state, formAction, pending] = useActionState(
     submitFeedbackAction,
     null
@@ -90,9 +88,9 @@ export function RatingForm({
         <div className="flex justify-center">
           <CheckCircle className="h-16 w-16 text-green-500" />
         </div>
-        <h2 className="text-2xl font-bold">Thank You!</h2>
+        <h2 className="text-2xl font-bold">شكراً لك!</h2>
         <p className="text-muted-foreground">
-          Your feedback has been submitted successfully.
+          تم إرسال تقييمك بنجاح.
         </p>
       </div>
     );
@@ -117,7 +115,7 @@ export function RatingForm({
           <p className="text-sm font-medium">
             {question.question_text}
             {question.is_required && (
-              <span className="text-destructive ml-1">*</span>
+              <span className="text-destructive mr-1">*</span>
             )}
           </p>
 
@@ -133,7 +131,7 @@ export function RatingForm({
               name={`text_${question.id}`}
               className="w-full rounded-lg border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
               rows={3}
-              placeholder="Share your experience..."
+              placeholder="شارك تجربتك..."
               required={question.is_required}
             />
           )}
@@ -147,10 +145,10 @@ export function RatingForm({
       <Button type="submit" className="w-full" size="lg" disabled={pending}>
         {pending ? (
           <>
-            <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Submitting...
+            <Loader2 className="ml-2 h-4 w-4 animate-spin" /> جاري الإرسال...
           </>
         ) : (
-          "Submit Feedback"
+          "إرسال التقييم"
         )}
       </Button>
     </form>

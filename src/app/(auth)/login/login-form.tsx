@@ -16,7 +16,7 @@ async function loginAction(
   const password = formData.get("password") as string;
 
   if (!email || !password) {
-    return { error: "Email and password are required." };
+    return { error: "البريد الإلكتروني وكلمة المرور مطلوبان." };
   }
 
   const supabase = createClient();
@@ -40,17 +40,17 @@ export function LoginForm() {
   return (
     <form action={formAction} className="space-y-4">
       <div className="space-y-2">
-        <Label htmlFor="email">Email</Label>
+        <Label htmlFor="email">البريد الإلكتروني</Label>
         <Input
           id="email"
           name="email"
           type="email"
-          placeholder="you@example.com"
+          placeholder="بريدك@example.com"
           required
         />
       </div>
       <div className="space-y-2">
-        <Label htmlFor="password">Password</Label>
+        <Label htmlFor="password">كلمة المرور</Label>
         <Input
           id="password"
           name="password"
@@ -65,10 +65,10 @@ export function LoginForm() {
       <Button type="submit" className="w-full" disabled={pending}>
         {pending ? (
           <>
-            <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Signing in...
+            <Loader2 className="ml-2 h-4 w-4 animate-spin" /> جاري تسجيل الدخول...
           </>
         ) : (
-          "Sign in"
+          "تسجيل الدخول"
         )}
       </Button>
     </form>

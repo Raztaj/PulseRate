@@ -7,8 +7,6 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Plus } from "lucide-react";
-import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import type { Question, Form } from "@/types";
 
@@ -52,24 +50,23 @@ export default async function FormsPage() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold tracking-tight">Feedback Forms</h1>
+          <h1 className="text-2xl font-bold tracking-tight">نماذج التقييم</h1>
           <p className="text-muted-foreground text-sm">
-            Manage your rating forms and questions
+            إدارة نماذج وأسئلة التقييم
           </p>
         </div>
         {formsWithQuestions.length > 0 && (
           <Button disabled>
-            <Plus className="mr-2 h-4 w-4" />
-            New Form
+            نموذج جديد
           </Button>
         )}
       </div>
 
       {formsWithQuestions.length === 0 ? (
         <div className="text-center py-16">
-          <h3 className="text-lg font-medium">No forms yet</h3>
+          <h3 className="text-lg font-medium">لا توجد نماذج بعد</h3>
           <p className="text-muted-foreground text-sm mt-1">
-            A default form was created during registration.
+            تم إنشاء نموذج افتراضي أثناء التسجيل.
           </p>
         </div>
       ) : (
@@ -80,7 +77,7 @@ export default async function FormsPage() {
                 <div className="flex items-center justify-between">
                   <CardTitle className="text-lg">{form.title}</CardTitle>
                   <Badge variant={form.is_active ? "default" : "secondary"}>
-                    {form.is_active ? "Active" : "Inactive"}
+                    {form.is_active ? "نشط" : "غير نشط"}
                   </Badge>
                 </div>
                 {form.description && (
@@ -101,9 +98,9 @@ export default async function FormsPage() {
                         <span>{q.question_text}</span>
                         <Badge
                           variant="outline"
-                          className="ml-auto text-xs capitalize"
+                          className="mr-auto text-xs capitalize"
                         >
-                          {q.question_type === "star_rating" ? "★ Stars" : "Text"}
+                          {q.question_type === "star_rating" ? "★ نجوم" : "نص"}
                         </Badge>
                         {q.is_required && (
                           <span className="text-destructive text-xs">*</span>
@@ -113,12 +110,11 @@ export default async function FormsPage() {
                   </ul>
                 ) : (
                   <p className="text-sm text-muted-foreground text-center py-4">
-                    No questions yet
+                    لا توجد أسئلة بعد
                   </p>
                 )}
                 <p className="text-xs text-muted-foreground mt-3">
-                  {form.questions.length} question
-                  {form.questions.length !== 1 ? "s" : ""}
+                  {form.questions.length} سؤال
                 </p>
               </CardContent>
             </Card>

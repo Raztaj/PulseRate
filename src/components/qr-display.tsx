@@ -46,8 +46,8 @@ export function QRDisplay({
         />
       </div>
       <Button variant="outline" size="sm" onClick={handleDownload}>
-        <Download className="mr-2 h-4 w-4" />
-        Download PNG
+        <Download className="ml-2 h-4 w-4" />
+        تحميل PNG
       </Button>
       <p className="text-xs text-muted-foreground break-all text-center max-w-[250px]">
         {value}

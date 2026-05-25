@@ -9,7 +9,6 @@ import { DeleteStaffButton } from "@/components/delete-staff-button";
 import { getInitials } from "@/lib/utils";
 import { Star, MessageSquare } from "lucide-react";
 
-
 export default async function StaffDetailPage(props: {
   params: Promise<{ id: string }>;
 }) {
@@ -90,7 +89,7 @@ export default async function StaffDetailPage(props: {
             {staff.department && ` · ${staff.department}`}
           </p>
           <p className="text-sm text-muted-foreground mt-1">
-            {ratings.length} total ratings
+            {ratings.length} تقييم
           </p>
         </div>
       </div>
@@ -100,7 +99,7 @@ export default async function StaffDetailPage(props: {
           <CardHeader>
             <CardTitle className="text-lg flex items-center gap-2">
               <Star className="h-4 w-4" />
-              Ratings Breakdown
+              توزيع التقييمات
             </CardTitle>
           </CardHeader>
           <CardContent>
@@ -111,7 +110,7 @@ export default async function StaffDetailPage(props: {
                   const pct = (count / ratings.length) * 100;
                   return (
                     <div key={star} className="flex items-center gap-2 text-sm">
-                      <span className="w-8 text-right">{star}★</span>
+                      <span className="w-8">{star}★</span>
                       <div className="flex-1 h-2 rounded-full bg-muted overflow-hidden">
                         <div
                           className="h-full rounded-full bg-primary"
@@ -127,7 +126,7 @@ export default async function StaffDetailPage(props: {
               </div>
             ) : (
               <p className="text-sm text-muted-foreground py-4 text-center">
-                No ratings yet
+                لا توجد تقييمات بعد
               </p>
             )}
           </CardContent>
@@ -137,7 +136,7 @@ export default async function StaffDetailPage(props: {
           <CardHeader>
             <CardTitle className="text-lg flex items-center gap-2">
               <MessageSquare className="h-4 w-4" />
-              QR Code
+              رمز الاستجابة السريعة
             </CardTitle>
           </CardHeader>
           <CardContent className="flex flex-col items-center">
@@ -152,7 +151,7 @@ export default async function StaffDetailPage(props: {
       {comments.length > 0 && (
         <Card>
           <CardHeader>
-            <CardTitle className="text-lg">Recent Comments</CardTitle>
+            <CardTitle className="text-lg">أحدث التعليقات</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="space-y-3">

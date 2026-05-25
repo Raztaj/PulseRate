@@ -21,7 +21,7 @@ export async function StaffLeaderboard({
   if (!staff || staff.length === 0) {
     return (
       <p className="text-sm text-muted-foreground py-8 text-center">
-        No staff members yet. Add staff to see ratings.
+        لا يوجد موظفون بعد. أضف موظفين لرؤية التقييمات.
       </p>
     );
   }
@@ -63,7 +63,7 @@ export async function StaffLeaderboard({
   if (sorted.length === 0) {
     return (
       <p className="text-sm text-muted-foreground py-8 text-center">
-        No ratings yet. Share staff QR codes to collect feedback.
+        لا توجد تقييمات بعد. شارك رموز QR للموظفين لجمع التقييمات.
       </p>
     );
   }
@@ -89,7 +89,7 @@ export async function StaffLeaderboard({
               {member.department || member.position || "—"}
             </p>
           </div>
-          <div className="text-right">
+          <div className="text-left">
             <Badge
               variant={
                 member.avg_rating >= 4
@@ -102,7 +102,7 @@ export async function StaffLeaderboard({
               {member.avg_rating.toFixed(1)}
             </Badge>
             <p className="text-xs text-muted-foreground mt-0.5">
-              {member.total} reviews
+              {member.total} تقييم
             </p>
           </div>
         </div>

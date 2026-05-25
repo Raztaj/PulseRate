@@ -11,7 +11,7 @@ async function deleteStaffAction(
   formData: FormData
 ) {
   const staffId = formData.get("staffId") as string;
-  if (!staffId) return { error: "Missing staff ID." };
+  if (!staffId) return { error: "معرف الموظف مفقود." };
 
   const supabase = createClient();
   const { error } = await supabase.from("staff").delete().eq("id", staffId);
@@ -37,17 +37,17 @@ export function DeleteStaffButton({ staffId }: { staffId: string }) {
         variant="destructive"
         disabled={pending}
         onClick={(e) => {
-          if (!confirm("Delete this staff member? This cannot be undone.")) {
+          if (!confirm("هل أنت متأكد من حذف هذا الموظف؟ لا يمكن التراجع عن هذا الإجراء.")) {
             e.preventDefault();
           }
         }}
       >
         {pending ? (
-          <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+          <Loader2 className="ml-2 h-4 w-4 animate-spin" />
         ) : (
-          <Trash2 className="mr-2 h-4 w-4" />
+          <Trash2 className="ml-2 h-4 w-4" />
         )}
-        Delete Staff
+        حذف الموظف
       </Button>
     </form>
   );

@@ -33,25 +33,25 @@ export function RegisterForm() {
   return (
     <form action={formAction} className="space-y-4">
       <div className="space-y-2">
-        <Label htmlFor="name">Your Name</Label>
-        <Input id="name" name="name" placeholder="Ahmed" required />
+        <Label htmlFor="name">الاسم</Label>
+        <Input id="name" name="name" placeholder="أحمد" required />
       </div>
       <div className="space-y-2">
-        <Label htmlFor="orgName">Business Name</Label>
-        <Input id="orgName" name="orgName" placeholder="Elite Salon" required />
+        <Label htmlFor="orgName">اسم المنشأة</Label>
+        <Input id="orgName" name="orgName" placeholder="صالون الخبر" required />
       </div>
       <div className="space-y-2">
-        <Label htmlFor="email">Email</Label>
+        <Label htmlFor="email">البريد الإلكتروني</Label>
         <Input
           id="email"
           name="email"
           type="email"
-          placeholder="you@example.com"
+          placeholder="بريدك@example.com"
           required
         />
       </div>
       <div className="space-y-2">
-        <Label htmlFor="password">Password</Label>
+        <Label htmlFor="password">كلمة المرور</Label>
         <Input
           id="password"
           name="password"
@@ -66,11 +66,10 @@ export function RegisterForm() {
       <Button type="submit" className="w-full" disabled={pending}>
         {pending ? (
           <>
-            <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Creating
-            account...
+            <Loader2 className="ml-2 h-4 w-4 animate-spin" /> جاري إنشاء الحساب...
           </>
         ) : (
-          "Create account"
+          "إنشاء حساب"
         )}
       </Button>
     </form>

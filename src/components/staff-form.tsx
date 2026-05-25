@@ -18,7 +18,7 @@ async function addStaffAction(
   const orgId = formData.get("orgId") as string;
 
   if (!name || !orgId) {
-    return { error: "Name is required." };
+    return { error: "الاسم مطلوب." };
   }
 
   const supabase = createClient();
@@ -52,28 +52,28 @@ export function StaffForm({ orgId, editId }: { orgId: string; editId?: string })
     <form action={formAction} className="space-y-4">
       <input type="hidden" name="orgId" value={orgId} />
       <div className="space-y-2">
-        <Label htmlFor="name">Full Name *</Label>
+        <Label htmlFor="name">الاسم الكامل *</Label>
         <Input
           id="name"
           name="name"
-          placeholder="Mohammed Al‑Rashid"
+          placeholder="محمد الراشد"
           required
         />
       </div>
       <div className="space-y-2">
-        <Label htmlFor="department">Department</Label>
+        <Label htmlFor="department">القسم</Label>
         <Input
           id="department"
           name="department"
-          placeholder="Hair Styling"
+          placeholder="تصفيف الشعر"
         />
       </div>
       <div className="space-y-2">
-        <Label htmlFor="position">Position</Label>
+        <Label htmlFor="position">المسمى الوظيفي</Label>
         <Input
           id="position"
           name="position"
-          placeholder="Senior Stylist"
+          placeholder="مصفف أزياء"
         />
       </div>
       {state?.error && (
@@ -83,10 +83,10 @@ export function StaffForm({ orgId, editId }: { orgId: string; editId?: string })
         <Button type="submit" disabled={pending}>
           {pending ? (
             <>
-              <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Saving...
+              <Loader2 className="ml-2 h-4 w-4 animate-spin" /> جاري الحفظ...
             </>
           ) : (
-            "Save Staff"
+            "حفظ"
           )}
         </Button>
         <Button
@@ -94,7 +94,7 @@ export function StaffForm({ orgId, editId }: { orgId: string; editId?: string })
           variant="outline"
           onClick={() => router.back()}
         >
-          Cancel
+          إلغاء
         </Button>
       </div>
     </form>

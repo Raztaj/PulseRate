@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import { cn } from "@/lib/utils";
@@ -11,14 +12,13 @@ import {
   ClipboardList,
   FileText,
   LogOut,
-  HeartPulse,
 } from "lucide-react";
 
 const navItems = [
-  { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
-  { href: "/dashboard/staff", label: "Staff", icon: Users },
-  { href: "/dashboard/forms", label: "Forms", icon: ClipboardList },
-  { href: "/dashboard/reports", label: "Reports", icon: FileText },
+  { href: "/dashboard", label: "لوحة التحكم", icon: LayoutDashboard },
+  { href: "/dashboard/staff", label: "الموظفين", icon: Users },
+  { href: "/dashboard/forms", label: "النماذج", icon: ClipboardList },
+  { href: "/dashboard/reports", label: "التقارير", icon: FileText },
 ];
 
 export function Sidebar() {
@@ -32,10 +32,10 @@ export function Sidebar() {
   }
 
   return (
-    <aside className="flex h-full w-60 flex-col border-r bg-card">
-      <div className="flex items-center gap-2 border-b px-6 py-5">
-        <HeartPulse className="h-6 w-6 text-primary" />
-        <span className="text-lg font-semibold">PulseRate</span>
+    <aside className="flex h-full w-60 flex-col border-l bg-card">
+      <div className="flex items-center gap-2 border-b px-6 py-4">
+        <Image src="/logo.svg" alt="خاتون" width={36} height={36} className="rounded-lg" />
+        <span className="text-xl font-bold">خاتون</span>
       </div>
       <nav className="flex-1 space-y-1 px-3 py-4">
         {navItems.map((item) => {
@@ -58,14 +58,15 @@ export function Sidebar() {
           );
         })}
       </nav>
-      <div className="border-t p-3">
+      <div className="border-t p-3 space-y-2">
+        <p className="text-xs text-muted-foreground text-center">منذ 1436</p>
         <Button
           variant="ghost"
           className="w-full justify-start text-muted-foreground"
           onClick={handleSignOut}
         >
-          <LogOut className="mr-2 h-4 w-4" />
-          Sign out
+          <LogOut className="ml-2 h-4 w-4" />
+          تسجيل الخروج
         </Button>
       </div>
     </aside>

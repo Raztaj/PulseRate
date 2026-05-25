@@ -14,7 +14,7 @@ export async function RatingChart({ orgId }: { orgId: string }) {
   if (staffIds.length === 0) {
     return (
       <p className="text-sm text-muted-foreground py-8 text-center">
-        No data yet.
+        لا توجد بيانات بعد.
       </p>
     );
   }
@@ -28,7 +28,7 @@ export async function RatingChart({ orgId }: { orgId: string }) {
   if (!submissions || submissions.length === 0) {
     return (
       <p className="text-sm text-muted-foreground py-8 text-center">
-        No data yet.
+        لا توجد بيانات بعد.
       </p>
     );
   }
@@ -49,7 +49,7 @@ export async function RatingChart({ orgId }: { orgId: string }) {
   for (const sub of submissions) {
     answerMap.set(sub.id, {
       ratings: [],
-      date: new Date(sub.submitted_at).toLocaleDateString("en-US", {
+      date: new Date(sub.submitted_at).toLocaleDateString("ar-SA", {
         month: "short",
         day: "numeric",
       }),

@@ -83,25 +83,25 @@ export default async function DashboardPage() {
 
   const stats = [
     {
-      title: "Total Reviews",
+      title: "إجمالي التقييمات",
       value: totalReviews ?? 0,
       icon: MessageSquare,
     },
     {
-      title: "Average Rating",
+      title: "متوسط التقييم",
       value: avgRating,
       icon: Star,
     },
-    { title: "Active Staff", value: totalStaff ?? 0, icon: Users },
-    { title: "Forms", value: totalForms ?? 0, icon: ClipboardList },
+    { title: "الموظفون النشطون", value: totalStaff ?? 0, icon: Users },
+    { title: "النماذج", value: totalForms ?? 0, icon: ClipboardList },
   ];
 
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-bold tracking-tight">Dashboard</h1>
+        <h1 className="text-2xl font-bold tracking-tight">لوحة التحكم</h1>
         <p className="text-muted-foreground text-sm">
-          Your organization at a glance
+          نظرة عامة على منشأتك
         </p>
       </div>
 
@@ -127,7 +127,7 @@ export default async function DashboardPage() {
       <div className="grid gap-6 lg:grid-cols-2">
         <Card>
           <CardHeader>
-            <CardTitle className="text-lg">Staff Leaderboard</CardTitle>
+            <CardTitle className="text-lg">ترتيب الموظفين</CardTitle>
           </CardHeader>
           <CardContent>
             <StaffLeaderboard orgId={orgId} />
@@ -135,7 +135,7 @@ export default async function DashboardPage() {
         </Card>
         <Card>
           <CardHeader>
-            <CardTitle className="text-lg">Rating Trends</CardTitle>
+            <CardTitle className="text-lg">اتجاهات التقييم</CardTitle>
           </CardHeader>
           <CardContent>
             <RatingChart orgId={orgId} />
@@ -145,7 +145,7 @@ export default async function DashboardPage() {
 
       <Card>
         <CardHeader>
-          <CardTitle className="text-lg">Recent Feedback</CardTitle>
+          <CardTitle className="text-lg">أحدث التقييمات</CardTitle>
         </CardHeader>
         <CardContent>
           <RecentFeedback orgId={orgId} />

@@ -1,4 +1,5 @@
 import { createClient } from "@/lib/supabase/server";
+import Image from "next/image";
 import { notFound } from "next/navigation";
 import { RatingForm } from "@/components/rating-form";
 
@@ -36,8 +37,9 @@ export default async function RateStaffPage(props: {
 
   return (
     <div className="flex min-h-screen items-center justify-center px-4 py-12">
-      <div className="w-full max-w-lg">
-        <div className="text-center mb-8">
+      <div className="w-full max-w-lg space-y-6">
+        <div className="text-center space-y-2">
+          <Image src="/logo.svg" alt="خاتون" width={48} height={48} className="mx-auto rounded-lg" />
           <h1 className="text-2xl font-bold">{staff.name}</h1>
           <p className="text-muted-foreground">
             {staff.position}
@@ -56,10 +58,12 @@ export default async function RateStaffPage(props: {
         ) : (
           <div className="text-center py-12">
             <p className="text-muted-foreground">
-              No feedback form available for this staff member.
+              لا توجد استمارة تقييم متاحة لهذا الموظف.
             </p>
           </div>
         )}
+
+        <p className="text-center text-xs text-muted-foreground">منذ 1436</p>
       </div>
     </div>
   );

@@ -28,9 +28,9 @@ export default async function ReportsPage() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-bold tracking-tight">Reports</h1>
+        <h1 className="text-2xl font-bold tracking-tight">التقارير</h1>
         <p className="text-muted-foreground text-sm">
-          Export your data
+          تصدير بياناتك
         </p>
       </div>
 
@@ -39,13 +39,12 @@ export default async function ReportsPage() {
           <CardHeader>
             <CardTitle className="text-lg flex items-center gap-2">
               <FileDown className="h-4 w-4" />
-              Staff Ratings CSV
+              ملف CSV لتقييمات الموظفين
             </CardTitle>
           </CardHeader>
           <CardContent>
             <p className="text-sm text-muted-foreground mb-4">
-              Download a CSV file with all staff members, their average
-              ratings, and total review counts.
+              تحميل ملف CSV يحتوي على جميع الموظفين ومتوسط تقييماتهم وإجمالي عدد التقييمات.
             </p>
             <ExportButton orgId={admin.organization_id} />
           </CardContent>
@@ -55,12 +54,12 @@ export default async function ReportsPage() {
           <CardHeader>
             <CardTitle className="text-lg flex items-center gap-2">
               <FileText className="h-4 w-4" />
-              Summary Report
+              تقرير ملخص
             </CardTitle>
           </CardHeader>
           <CardContent>
             <p className="text-sm text-muted-foreground mb-4">
-              Coming soon: PDF report with charts, trends, and analytics.
+              قريباً: تقرير PDF مع الرسوم البيانية والاتجاهات والتحليلات.
             </p>
           </CardContent>
         </Card>

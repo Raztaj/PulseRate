@@ -21,9 +21,9 @@ export default async function NewStaffPage() {
   return (
     <div className="mx-auto max-w-lg space-y-6">
       <div>
-        <h1 className="text-2xl font-bold tracking-tight">Add Staff</h1>
+        <h1 className="text-2xl font-bold tracking-tight">إضافة موظف</h1>
         <p className="text-muted-foreground text-sm">
-          Add a new team member to generate their QR code
+          أضف عضو جديد لفريق العمل لإنشاء رمز QR خاص به
         </p>
       </div>
       <StaffForm orgId={admin.organization_id} />

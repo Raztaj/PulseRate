@@ -13,7 +13,7 @@ async function exportAction(
   const csv = await exportCsv(orgId);
 
   if (!csv) {
-    return { error: "No data to export." };
+    return { error: "لا توجد بيانات للتصدير." };
   }
 
   return { csv };
@@ -38,11 +38,11 @@ export function ExportButton({ orgId }: { orgId: string }) {
       <Button type="submit" variant="outline" disabled={pending}>
         {pending ? (
           <>
-            <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Exporting...
+            <Loader2 className="ml-2 h-4 w-4 animate-spin" /> جاري التصدير...
           </>
         ) : (
           <>
-            <Loader2 className="mr-2 h-4 w-4" /> Export CSV
+            <Loader2 className="ml-2 h-4 w-4" /> تصدير CSV
           </>
         )}
       </Button>

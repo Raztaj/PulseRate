@@ -62,29 +62,29 @@ export default async function StaffPage() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold tracking-tight">Staff</h1>
+          <h1 className="text-2xl font-bold tracking-tight">الموظفين</h1>
           <p className="text-muted-foreground text-sm">
-            Manage your team members
+            إدارة فريق العمل
           </p>
         </div>
         <Link href="/dashboard/staff/new">
           <Button>
-            <Plus className="mr-2 h-4 w-4" />
-            Add Staff
+            <Plus className="ml-2 h-4 w-4" />
+            إضافة موظف
           </Button>
         </Link>
       </div>
 
       {staffWithStats.length === 0 ? (
         <div className="text-center py-16">
-          <h3 className="text-lg font-medium">No staff yet</h3>
+          <h3 className="text-lg font-medium">لا يوجد موظفون بعد</h3>
           <p className="text-muted-foreground text-sm mt-1">
-            Add your first team member to start collecting feedback.
+            أضف أول موظف في فريقك لبدء جمع التقييمات.
           </p>
           <Link href="/dashboard/staff/new">
             <Button className="mt-4">
-              <Plus className="mr-2 h-4 w-4" />
-              Add Staff
+              <Plus className="ml-2 h-4 w-4" />
+              إضافة موظف
             </Button>
           </Link>
         </div>
