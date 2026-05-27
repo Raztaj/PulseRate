@@ -80,16 +80,7 @@ async function addStaffAction(
     return { error: "فشل إضافة الأسئلة." };
   }
 
-  const { error: linkError } = await supabase
-    .from("staff")
-    .update({ form_id: form.id })
-    .eq("id", staff.id);
-
-  if (linkError) {
-    return { error: "فشل ربط النموذج." };
-  }
-
-  return { success: true, staffId: staff.id };
+  return { success: true, staffId: staff.id, formId: form.id };
 }
 
 export function StaffForm({ orgId }: { orgId: string }) {

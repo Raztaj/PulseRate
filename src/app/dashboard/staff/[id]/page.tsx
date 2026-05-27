@@ -58,14 +58,21 @@ export default async function StaffDetailPage(props: {
   let formQuestions: Question[] = [];
   let formId: string | null = null;
 
-  if (staff.form_id) {
+  const { data: staffForm } = await supabase
+    .from("forms")
+    .select("id")
+    .eq("organization_id", staff.organization_id)
+    .eq("title", `نموذج ${staff.name}`)
+    .maybeSingle();
+
+  if (staffForm) {
     const { data: questions } = await supabase
       .from("questions")
       .select("*")
-      .eq("form_id", staff.form_id)
+      .eq("form_id", staffForm.id)
       .order("order_index");
     formQuestions = (questions ?? []) as Question[];
-    formId = staff.form_id;
+    formId = staffForm.id;
   }
 
   const baseUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";

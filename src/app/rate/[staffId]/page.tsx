@@ -13,7 +13,7 @@ export default async function RateStaffPage(props: {
 
   const { data: staff } = await supabase
     .from("staff")
-    .select("id, name, department, position, form_id")
+    .select("id, name, department, position, organization_id")
     .eq("id", staffId)
     .eq("is_active", true)
     .maybeSingle();
@@ -23,23 +23,22 @@ export default async function RateStaffPage(props: {
   let questions: Question[] = [];
   let formData: { id: string; title: string; description: string } | null = null;
 
-  if (staff.form_id) {
-    const { data: form } = await supabase
-      .from("forms")
-      .select("id, title, description")
-      .eq("id", staff.form_id)
-      .eq("is_active", true)
-      .maybeSingle();
+  const { data: form } = await supabase
+    .from("forms")
+    .select("id, title, description")
+    .eq("organization_id", staff.organization_id)
+    .eq("title", `نموذج ${staff.name}`)
+    .eq("is_active", true)
+    .maybeSingle();
 
-    if (form) {
-      formData = form;
-      const { data: qs } = await supabase
-        .from("questions")
-        .select("*")
-        .eq("form_id", form.id)
-        .order("order_index");
-      questions = (qs ?? []) as Question[];
-    }
+  if (form) {
+    formData = form;
+    const { data: qs } = await supabase
+      .from("questions")
+      .select("*")
+      .eq("form_id", form.id)
+      .order("order_index");
+    questions = (qs ?? []) as Question[];
   }
 
   return (
